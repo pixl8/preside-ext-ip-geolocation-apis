@@ -1,4 +1,4 @@
-# preside-ext-ip-geolocation-apis
+# Preside IP Geolocation APIs Extension
 Preside extension to allow application developers to get all geolocation information about an IP address in a number of different formats.
 
 Mainly developed for use with the https://extreme-ip-lookup.com/ IP Geolocation service but can be adapted to another provider.
