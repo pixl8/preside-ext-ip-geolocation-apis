@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<tab id="default">
+		<fieldset id="default">
+			<field name="endpoint"         control="textinput" required="true"                               label="system-config.ip_geolocation:endpoint.label"         help="system-config.ip_geolocation:endpoint.help"        placeholder="system-config.ip_geolocation:endpoint.placeholder"        />
+			<field name="result_format"    control="textinput" required="false"                              label="system-config.ip_geolocation:result_format.label"    help="system-config.ip_geolocation:result_format.help"   placeholder="system-config.ip_geolocation:result_format.placeholder"   />
+			<field name="callback_key"     control="textinput" required="false"                              label="system-config.ip_geolocation:callback_key.label"     help="system-config.ip_geolocation:callback_key.help"    placeholder="system-config.ip_geolocation:callback_key.placeholder"    />
+			<field name="callback_method"  control="textinput" required="false"                              label="system-config.ip_geolocation:callback_method.label"  help="system-config.ip_geolocation:callback_method.help" placeholder="system-config.ip_geolocation:callback_method.placeholder" />
+			<field name="api_key"          control="textinput" required="false"                              label="system-config.ip_geolocation:api_key.label"          help="system-config.ip_geolocation:api_key.help"         placeholder="system-config.ip_geolocation:api_key.placeholder" />
+			<field name="api_call_timeout" control="spinner"   required="true" minValue="30" maxValue="1000" label="system-config.ip_geolocation:api_call_timeout.label" help="system-config.ip_geolocation:api_call_timeout.help" />
+		</fieldset>
+	</tab>
+</form>
