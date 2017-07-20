@@ -1,4 +1,9 @@
+/**
+ * @presideService
+ */
 component singleton=true {
+
+	variables.ipLookupCache = {};
 
 // CONSTRUCTOR
 	/**
@@ -17,8 +22,8 @@ component singleton=true {
 		var uri                  = "/" & _getResultFormat() & "/" & arguments.ipAddress;
 		var queryStringSeparator = "?";
 
-		if( _getCallbackMethod().Len() ){
-			if( !_getCallbackKey().Len() ){
+		if( _getCallbackMethod().Len() ) {
+			if( !_getCallbackKey().Len() ) {
 				_processError( "missingConfig", "You must set the callback Key AND Method in the CMS Settings when using the callback feature." );
 			}
 			uri &= queryStringSeparator & _getCallbackKey() & "=" & _getCallbackMethod()
@@ -31,6 +36,15 @@ component singleton=true {
 
 		return _sendRequest( uri );
 	}
+
+	public struct function getIpLookupFromCache( required string ipAddress ) {
+		if ( !ipLookupCache.keyExists( arguments.ipAddress ) ) {
+			ipLookupCache[ arguments.ipAddress ] = getIP( arguments.ipAddress );
+		}
+
+		return ipLookupCache[ arguments.ipAddress ];
+	}
+
 
 // PRIVATE HELPERS
 	private any function _sendRequest( required string uri, string method="GET", string body="" ) {
