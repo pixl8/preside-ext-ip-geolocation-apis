@@ -9,7 +9,7 @@ component {
 
 	/**
 	  * @continent.fieldtype    select
-	  * @continent.values       Africa,Antartica,Asia,Australia,Europe,NorthAmerica,SouthAmerica
+	  * @continent.values       Africa,Antartica,Asia,Oceania,Europe,NorthAmerica,SouthAmerica
 	  * @continent.labelUriRoot rules.expressions.hascontinent:
 	  * @continent.multiple     true
 	  */
