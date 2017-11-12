@@ -157,7 +157,7 @@ component singleton=true {
 	}
 
 	private numeric function _getApiCallTimeout() {
-		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_call_timeout", "60" ) );
+		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_call_timeout", "5" ) );
 	}
 
 }
