@@ -110,14 +110,15 @@ component singleton=true {
 		}
 	}
 
-	private void function _processError( required string errorType, required string message, struct extraInfo={} ) {
+	private void function _processError( required string errorType, required string message, struct extraInfo={}, throwError=true ) {
 		var logger = _getLogger();
 
 		if ( logger.canError() ) {
 			_getLogger().error( arguments.message, arguments.extraInfo );
 		}
-
-		throw( type="IpLookupWrapper.#arguments.errorType#", message=arguments.message, detail=SerializeJson( arguments.extraInfo ) );
+		if( arguments.throwError ){
+			throw( type="IpLookupWrapper.#arguments.errorType#", message=arguments.message, detail=SerializeJson( arguments.extraInfo ) );
+		}
 	}
 
 
