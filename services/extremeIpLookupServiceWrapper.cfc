@@ -24,7 +24,7 @@ component singleton=true {
 
 		if( _getCallbackMethod().Len() ) {
 			if( !_getCallbackKey().Len() ) {
-				_processError( "missingConfig", "You must set the callback Key AND Method in the CMS Settings when using the callback feature." );
+				_processError( "missingConfig", "You must set the callback Key AND method in the CMS Settings when using the callback feature." );
 			}
 			uri &= queryStringSeparator & _getCallbackKey() & "=" & _getCallbackMethod()
 			queryStringSeparator = "&";
