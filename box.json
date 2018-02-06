@@ -1,6 +1,6 @@
 {
 	  "name"                   : "PresideCMS Extension: IP Geolocation API"
-	, "version"                : "1.2.2"
+	, "version"                : "1.2.3"
 	, "author"                 : "Niall O'Doherty"
 	, "directory"              : "application/extensions"
 	, "homepage"               : "https://github.com/nodoherty/preside-ext-ip-geolocation-apis"
