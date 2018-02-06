@@ -167,7 +167,8 @@ component singleton=true {
 	}
 
 	private string function _getResultFormat() {
-		return _getSystemConfigurationService().getSetting( "ip_geolocation", "result_format", "json" );
+		var resultFormat = _getSystemConfigurationService().getSetting( "ip_geolocation", "result_format", "json" );
+		return resultFormat.len() ? resultFormat : "json";
 	}
 
 	private string function _getCallbackKey() {
