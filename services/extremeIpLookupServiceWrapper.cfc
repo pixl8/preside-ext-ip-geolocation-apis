@@ -24,7 +24,7 @@ component singleton=true {
 
 		if( _getCallbackMethod().Len() ) {
 			if( !_getCallbackKey().Len() ) {
-				_processError( "missingConfig", "You must set the callback Key AND Method in the CMS Settings when using the callback feature." );
+				_processError( "missingConfig", "You must set the callback Key AND method in the CMS Settings when using the callback feature." );
 			}
 			uri &= queryStringSeparator & _getCallbackKey() & "=" & _getCallbackMethod()
 			queryStringSeparator = "&";
@@ -45,6 +45,26 @@ component singleton=true {
 		return ipLookupCache[ arguments.ipAddress ];
 	}
 
+	public struct function scaffoldBlankResponse() {
+		return {
+			  businessName    = ""
+			, businessWebsite = ""
+			, city            = "London"
+			, continent       = "Europe"
+			, country         = "United Kingdom"
+			, countryCode     = "GB"
+			, ipName          = ""
+			, ipType          = ""
+			, isp             = ""
+			, lat             = "0.0"
+			, lon             = "0.0"
+			, org             = ""
+			, query           = "86.187.167.123"
+			, region          = "London, City of"
+			, status          = "bypassed"
+		};
+	}
+
 
 // PRIVATE HELPERS
 	private any function _sendRequest( required string uri, string method="GET", string body="" ) {
@@ -53,13 +73,18 @@ component singleton=true {
 		var requestTimeout = _getApiCallTimeout();
 		var apiKey         = _getApiKey();
 
-		http method=arguments.method url=fullUrl result="result" timeout=requestTimeout {
-			if ( Len( Trim( apiKey ) ) ) {
-				httpparam type="url" name="auth" value=apiKey;
+		try {
+			http method=arguments.method url=fullUrl result="result" timeout=requestTimeout {
+				if ( Len( Trim( apiKey ) ) ) {
+					httpparam type="url" name="auth" value=apiKey;
+				}
+				if ( Len( Trim( arguments.body ) ) ) {
+					httpparam type="body" value=arguments.body;
+				}
 			}
-			if ( Len( Trim( arguments.body ) ) ) {
-				httpparam type="body" value=arguments.body;
-			}
+		} catch ( any e ) {
+			$raiseError( e );
+			return "Message: " & e.mesage & " Detail: " & e.detail;
 		}
 
 		return _processHttpResponse( result, arguments.method, arguments.uri, arguments.body );
@@ -110,14 +135,15 @@ component singleton=true {
 		}
 	}
 
-	private void function _processError( required string errorType, required string message, struct extraInfo={} ) {
+	private void function _processError( required string errorType, required string message, struct extraInfo={}, throwError=true ) {
 		var logger = _getLogger();
 
 		if ( logger.canError() ) {
 			_getLogger().error( arguments.message, arguments.extraInfo );
 		}
-
-		throw( type="IpLookupWrapper.#arguments.errorType#", message=arguments.message, detail=SerializeJson( arguments.extraInfo ) );
+		if( arguments.throwError ){
+			throw( type="IpLookupWrapper.#arguments.errorType#", message=arguments.message, detail=SerializeJson( arguments.extraInfo ) );
+		}
 	}
 
 
@@ -141,7 +167,8 @@ component singleton=true {
 	}
 
 	private string function _getResultFormat() {
-		return _getSystemConfigurationService().getSetting( "ip_geolocation", "result_format", "json" );
+		var resultFormat = _getSystemConfigurationService().getSetting( "ip_geolocation", "result_format", "json" );
+		return resultFormat.len() ? resultFormat : "json";
 	}
 
 	private string function _getCallbackKey() {
@@ -157,7 +184,7 @@ component singleton=true {
 	}
 
 	private numeric function _getApiCallTimeout() {
-		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_call_timeout", "60" ) );
+		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_call_timeout", "5" ) );
 	}
 
 }
