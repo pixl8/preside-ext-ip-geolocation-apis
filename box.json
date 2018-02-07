@@ -6,7 +6,7 @@
 	, "homepage"               : "https://github.com/nodoherty/preside-ext-ip-geolocation-apis"
 	, "documentation"          : "https://github.com/nodoherty/preside-ext-ip-geolocation-apis"
 	, "type"                   : "preside-extensions"
-	, "location"               : "https://github.com/nodoherty/preside-ext-ip-geolocation-apis/archive/v1.2.2.zip"
+	, "location"               : "https://github.com/nodoherty/preside-ext-ip-geolocation-apis/archive/v1.2.3.zip"
 	, "repository"             : {
 		  "type" : "git"
 		, "URL"  : "https://github.com/nodoherty/preside-ext-ip-geolocation-apis"
