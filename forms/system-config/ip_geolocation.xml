@@ -7,13 +7,13 @@
 			<field name="callback_key"     control="textinput" required="false"                               label="system-config.ip_geolocation:callback_key.label"     help="system-config.ip_geolocation:callback_key.help"    placeholder="system-config.ip_geolocation:callback_key.placeholder"    />
 			<field name="callback_method"  control="textinput" required="false"                               label="system-config.ip_geolocation:callback_method.label"  help="system-config.ip_geolocation:callback_method.help" placeholder="system-config.ip_geolocation:callback_method.placeholder" />
 			<field name="api_key"          control="textinput" required="false"                               label="system-config.ip_geolocation:api_key.label"          help="system-config.ip_geolocation:api_key.help"         placeholder="system-config.ip_geolocation:api_key.placeholder"         />
-			<field name="api_call_timeout" control="spinner"   required="true"  minValue="30" maxValue="1000" label="system-config.ip_geolocation:api_call_timeout.label" help="system-config.ip_geolocation:api_call_timeout.help" />
+			<field name="api_call_timeout" control="spinner"   required="true"  minValue="1" maxValue="1000"  label="system-config.ip_geolocation:api_call_timeout.label" help="system-config.ip_geolocation:api_call_timeout.help" />
 		</fieldset>
 	</tab>
 	<tab id="externalIpLookupService">
 		<fieldset id="default">
 			<field name="extip_service_endpoint"        control="textinput" required="true"                               label="system-config.ip_geolocation:extip_service_endpoint.label"         help="system-config.ip_geolocation:extip_service_endpoint.help"        placeholder="system-config.ip_geolocation:extip_service_endpoint.placeholder" />
-			<field name="extip_serviceapi_call_timeout" control="spinner"   required="true" minValue="30" maxValue="1000" label="system-config.ip_geolocation:extip_serviceapi_call_timeout.label"  help="system-config.ip_geolocation:extip_serviceapi_call_timeout.help" />
+			<field name="extip_serviceapi_call_timeout" control="spinner"   required="true" minValue="1" maxValue="1000"  label="system-config.ip_geolocation:extip_serviceapi_call_timeout.label"  help="system-config.ip_geolocation:extip_serviceapi_call_timeout.help" />
 		</fieldset>
 	</tab>
 </form>
