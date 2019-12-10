@@ -84,7 +84,7 @@ component singleton=true {
 			}
 		} catch ( any e ) {
 			$raiseError( e );
-			return "Message: " & (e.message ?: "") & " Detail: " & (e.detail ?: "");
+			return "Message: " & ( e.message ?: "" )  & " Detail: " & ( e.detail ?: "" );
 		}
 
 		return _processHttpResponse( result, arguments.method, arguments.uri, arguments.body );
