@@ -20,13 +20,12 @@ From the root of your application type the following command:
 
 From the Preside CMS developer console (using the back tick ` key) reload the application:
 
-	reload all
+reload all
 
 ### Enabling the extension
-Once the files are installed, enable the extension by opening up the Preside CMS developer console and entering:
+Once the files are installed, enable the extension by reloading the application:
 
-	extension enable preside-ext-ip-geolocation-apis
-	reload all
+	reload all --force
 
 ## Usage
 See the included handler `ipGeolocation.cfc` for examples of calling directly via ColdFusion server code or via AJAX
