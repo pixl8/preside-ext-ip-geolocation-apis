@@ -21,6 +21,11 @@ component singleton=true {
 	public any function getIP( required string ipAddress, struct additionalParams={} ) {
 		var uri                  = "/" & _getResultFormat() & "/" & arguments.ipAddress;
 		var queryStringSeparator = "?";
+		var cachedResult         = getIpLookupFromCache( arguments.ipAddress );
+
+		if( !structIsEmpty( cachedResult ) ){
+			return cachedResult;
+		}
 
 		if( _getCallbackMethod().Len() ) {
 			if( !_getCallbackKey().Len() ) {
@@ -39,7 +44,8 @@ component singleton=true {
 
 	public struct function getIpLookupFromCache( required string ipAddress ) {
 		if ( !ipLookupCache.keyExists( arguments.ipAddress ) ) {
-			ipLookupCache[ arguments.ipAddress ] = getIP( arguments.ipAddress );
+			// ipLookupCache[ arguments.ipAddress ] = getIP( arguments.ipAddress );
+			return {};
 		}
 
 		return ipLookupCache[ arguments.ipAddress ];
@@ -118,6 +124,7 @@ component singleton=true {
 			}
 
 			if ( ( response.status ?: "" ) == "success" || ( isSimpleValue( response ) && findNoCase( "success", response ) ) ) {
+				ipLookupCache[ response.query ?: "unknown" ] = response;
 				return response;
 			} else {
 				if ( Len( Trim( response.message ?: "" ) ) ) {
