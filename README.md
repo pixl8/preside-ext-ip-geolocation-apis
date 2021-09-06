@@ -5,6 +5,10 @@ Mainly developed for use with the https://extreme-ip-lookup.com/ IP Geolocation 
 
 Simply configure the API settings and that should be all you need.  Examples are given in the CMS Admin Settings form.
 
+## IPv4 and IPv6 Support
+The initial service provider Extreme IP Lookup does not currently support IPv6 address format lookups therefore the extension was extended to include
+an additional service https://ipwhois.io/ which provides the same level of accuracy but acts as a backup if the visitors IP address format is not IPv4.
+
 ## Installation
 Install the extension to your application via either of the methods detailed below (Git submodule / CommandBox + ForgeBox)
 
@@ -19,8 +23,7 @@ From the root of your application type the following command:
 	box install preside-ext-ip-geolocation-apis
 
 From the Preside CMS developer console (using the back tick ` key) reload the application:
-
-reload all
+	reload all
 
 ### Enabling the extension
 Once the files are installed, enable the extension by reloading the application:
