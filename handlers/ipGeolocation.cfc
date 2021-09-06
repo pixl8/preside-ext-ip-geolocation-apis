@@ -65,6 +65,7 @@ component {
 			var result = extremeIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
 		}
 
+		dump( visitorIpAddress );
 		dump( result )
 		abort;
 	}
