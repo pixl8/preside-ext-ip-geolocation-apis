@@ -3,7 +3,7 @@
  */
 component singleton=true {
 
-	variables.ipLookupCache = {};
+	variables.ipWhoisLookupCache = {};
 
 // CONSTRUCTOR
 	/**
@@ -43,12 +43,12 @@ component singleton=true {
 	}
 
 	public struct function getIpLookupFromCache( required string ipAddress ) {
-		if ( !ipLookupCache.keyExists( arguments.ipAddress ) ) {
-			// ipLookupCache[ arguments.ipAddress ] = getIP( arguments.ipAddress );
+		if ( !ipWhoisLookupCache.keyExists( arguments.ipAddress ) ) {
+			//ipWhoisLookupCache[ arguments.ipAddress ] = getIP( arguments.ipAddress );
 			return {};
 		}
 
-		return ipLookupCache[ arguments.ipAddress ];
+		return ipWhoisLookupCache[ arguments.ipAddress ];
 	}
 
 	public struct function scaffoldBlankResponse() {
@@ -112,6 +112,7 @@ component singleton=true {
 			try {
 				if( format == "json" && !hasCallbackMethod ) {
 					response = DeserializeJson( arguments.httpResponse.filecontent );
+					response = _transformJsonResults( response );
 				} else if ( format == "json" && hasCallbackMethod ) {
 					response = ( toString( toBinary( arguments.httpResponse.filecontent ) ) );
 				} else if ( format == "xml" ) {
@@ -124,7 +125,7 @@ component singleton=true {
 			}
 
 			if ( ( response.status ?: "" ) == "success" || ( isSimpleValue( response ) && findNoCase( "success", response ) ) ) {
-				ipLookupCache[ response.query ?: "unknown" ] = response;
+				ipWhoisLookupCache[ response.query ?: "unknown" ] = response;
 				return response;
 			} else {
 				if ( Len( Trim( response.message ?: "" ) ) ) {
@@ -149,7 +150,7 @@ component singleton=true {
 			_getLogger().error( arguments.message, arguments.extraInfo );
 		}
 		if( arguments.throwError ){
-			throw( type="IpLookupWrapper.#arguments.errorType#", message=arguments.message, detail=SerializeJson( arguments.extraInfo ) );
+			throw( type="IpWhoIsIpLookupWrapper.#arguments.errorType#", message=arguments.message, detail=SerializeJson( arguments.extraInfo ) );
 		}
 	}
 
@@ -170,28 +171,56 @@ component singleton=true {
 	}
 
 	private string function _getEndpoint() {
-		return _getSystemConfigurationService().getSetting( "ip_geolocation", "endpoint", "" );
+		return _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_endpoint", "" );
 	}
 
 	private string function _getResultFormat() {
-		var resultFormat = _getSystemConfigurationService().getSetting( "ip_geolocation", "result_format", "json" );
+		var resultFormat = _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_result_format", "json" );
 		return resultFormat.len() ? resultFormat : "json";
 	}
 
 	private string function _getCallbackKey() {
-		return _getSystemConfigurationService().getSetting( "ip_geolocation", "callback_key", "" );
+		return _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_callback_key", "" );
 	}
 
 	private string function _getCallbackMethod() {
-		return _getSystemConfigurationService().getSetting( "ip_geolocation", "callback_method", "" );
+		return _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_callback_method", "" );
+	}
+
+	private string function _getResponseObjects() {
+		return _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_response_objects", "" );
 	}
 
 	private string function _getApiKey() {
-		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_key", "" ) );
+		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_api_key", "" ) );
 	}
 
 	private numeric function _getApiCallTimeout() {
-		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_call_timeout", "5" ) );
+		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_api_call_timeout", "5" ) );
+	}
+
+	private struct function _transformJsonResults( required struct apiCallResults ){
+		var transformedResponse = scaffoldBlankResponse();
+
+		transformedResponse.city        = apiCallResults.city         ?: transformedResponse.city;
+		transformedResponse.continent   = apiCallResults.continent    ?: transformedResponse.continent;
+		transformedResponse.country     = apiCallResults.country      ?: transformedResponse.country;
+		transformedResponse.countryCode = apiCallResults.country_code ?: transformedResponse.countryCode;
+		transformedResponse.isp         = apiCallResults.isp          ?: transformedResponse.isp;
+		transformedResponse.lat         = apiCallResults.latitude     ?: transformedResponse.lat;
+		transformedResponse.lon         = apiCallResults.longitude    ?: transformedResponse.lon;
+		transformedResponse.org         = apiCallResults.org          ?: transformedResponse.org;
+		transformedResponse.query       = apiCallResults.ip           ?: transformedResponse.query;
+		transformedResponse.region      = apiCallResults.region       ?: transformedResponse.region;
+		transformedResponse.status      = apiCallResults.success      ?: transformedResponse.status;
+
+		if( ( IsBoolean( transformedResponse.status ) && transformedResponse.status ) || transformedResponse.status == "success") {
+			transformedResponse.status = "success";
+		} else {
+			transformedResponse.status = "fail";
+		}
+
+		return transformedResponse;
 	}
 
 }
