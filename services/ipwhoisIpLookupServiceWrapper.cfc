@@ -214,7 +214,7 @@ component singleton=true {
 		transformedResponse.region      = apiCallResults.region       ?: transformedResponse.region;
 		transformedResponse.status      = apiCallResults.success      ?: transformedResponse.status;
 
-		if( IsTrue( transformedResponse.status ) || transformedResponse.status == "success") {
+		if( ( IsBoolean( transformedResponse.status ) && transformedResponse.status ) || transformedResponse.status == "success") {
 			transformedResponse.status = "success";
 		} else {
 			transformedResponse.status = "fail";
