@@ -1,0 +1,12 @@
+# Changelog
+
+## 1.3.0
+* Adding new service for IPv6 support
+* Adding caching to help with remain within 3rd party API rate limits
+* Changelog added
+
+## 1.2.7
+* Fixing typo and updating instructions + bumping version numbers
+
+## 1.2.5
+* Updating extension to allow for smaller HTTP call timeout values
