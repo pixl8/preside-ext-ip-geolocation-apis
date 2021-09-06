@@ -44,7 +44,6 @@ component singleton=true {
 
 	public struct function getIpLookupFromCache( required string ipAddress ) {
 		if ( !ipLookupCache.keyExists( arguments.ipAddress ) ) {
-			// ipLookupCache[ arguments.ipAddress ] = getIP( arguments.ipAddress );
 			return {};
 		}
 
