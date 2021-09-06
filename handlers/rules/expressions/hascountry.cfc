@@ -5,6 +5,7 @@
 component {
 
 	property name="extremeIpLookupServiceWrapper" inject="extremeIpLookupServiceWrapper";
+	property name="ipwhoisIpLookupServiceWrapper" inject="ipwhoisIpLookupServiceWrapper";
 	property name="systemConfigurationService"    inject="systemConfigurationService";
 
 	/**
@@ -26,10 +27,15 @@ component {
 			userIp  = deserializeJSON( extIpResult.filecontent ).IP;
 		}
 
-		var result = extremeIpLookupServiceWrapper.getIpLookupFromCache( ipAddress=userIp );
+		var result = {}
+
+		if( IsIPv6( userIp ) ){
+			result = ipwhoisIpLookupServiceWrapper.getIpLookupFromCache( ipAddress=userIp );
+		} else {
+			result = extremeIpLookupServiceWrapper.getIpLookupFromCache( ipAddress=userIp );
+		}
 
 		return arguments._is == ( arguments.country.listFindNoCase( result.countryCode ?: "" ) > 0 );
-
 	}
 
 }
