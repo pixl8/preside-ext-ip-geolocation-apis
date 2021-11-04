@@ -37,3 +37,6 @@ Once the files are installed, enable the extension by reloading the application:
 
 ## Usage
 See the included handler `ipGeolocation.cfc` for examples of calling directly via ColdFusion server code or via AJAX
+
+You can use the text method to see debug output for the API calls, simply update your IP Address in the URL below:
+`?event=ipGeolocation.proxyGetIp&test_ip_address=78.155.228.144`

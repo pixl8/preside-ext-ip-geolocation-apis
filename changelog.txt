@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.4
+* Adding debug output for the test method proxyGetIp()
+
 ## 1.3.3
 * Fixing bug with getting the API key - removed incorrect Val()
 * Adding the ability to pass a test IP address in the URL using parameter `test_ip_address`
