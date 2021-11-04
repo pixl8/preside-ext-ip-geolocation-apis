@@ -19,7 +19,14 @@ component singleton=true {
 
 // PUBLIC API METHODS
 	public any function getIP( required string ipAddress, struct additionalParams={} ) {
-		var uri                  = "/" & _getResultFormat() & "/" & arguments.ipAddress;
+		var apiKey   = _getApiKey();
+		var uri      = _getResultFormat() & "/" & arguments.ipAddress;
+		var endpoint = _getEndpoint();
+
+		if( !( left( endpoint, 1 ) == "/") ) {
+			uri = "/" & uri;
+		}
+
 		var queryStringSeparator = "?";
 		var cachedResult         = getIpLookupFromCache( arguments.ipAddress );
 
@@ -37,6 +44,11 @@ component singleton=true {
 
 		for ( var key in additionalParams ) {
 			uri &= queryStringSeparator & key & "=" & additionalParams[ key ];
+			queryStringSeparator = "&";
+		}
+
+		if( Len( Trim( apiKey ) ) ){
+			uri &= queryStringSeparator & "key=" & apiKey;
 		}
 
 		return _sendRequest( uri );
@@ -186,7 +198,7 @@ component singleton=true {
 	}
 
 	private string function _getApiKey() {
-		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "api_key", "" ) );
+		return _getSystemConfigurationService().getSetting( "ip_geolocation", "api_key", "" );
 	}
 
 	private numeric function _getApiCallTimeout() {

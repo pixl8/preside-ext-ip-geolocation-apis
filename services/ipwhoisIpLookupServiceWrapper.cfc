@@ -37,6 +37,7 @@ component singleton=true {
 
 		for ( var key in additionalParams ) {
 			uri &= queryStringSeparator & key & "=" & additionalParams[ key ];
+			queryStringSeparator = "&";
 		}
 
 		return _sendRequest( uri );
@@ -191,7 +192,7 @@ component singleton=true {
 	}
 
 	private string function _getApiKey() {
-		return Val( _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_api_key", "" ) );
+		return _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_api_key", "" );
 	}
 
 	private numeric function _getApiCallTimeout() {
