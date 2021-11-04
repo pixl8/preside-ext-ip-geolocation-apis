@@ -5,6 +5,11 @@ Mainly developed for use with the https://extreme-ip-lookup.com/ IP Geolocation 
 
 Simply configure the API settings and that should be all you need.  Examples are given in the CMS Admin Settings form.
 
+## IMPORTANT NOTE
+The https://extreme-ip-lookup.com/ IP Geolocation service now *requires an API key* so please register an account there first before configuring.
+
+There is still a free plan but the calls will be rejected if not made with a valid API key which can simply be added in the CMS Admin settings.
+
 ## IPv4 and IPv6 Support
 The initial service provider Extreme IP Lookup does not currently support IPv6 address format lookups therefore the extension was extended to include
 an additional service https://ipwhois.io/ which provides the same level of accuracy but acts as a backup if the visitors IP address format is not IPv4.

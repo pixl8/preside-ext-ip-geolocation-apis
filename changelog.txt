@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.3
+* Fixing bug with getting the API key - removed incorrect Val()
+* Adding the ability to pass a test IP address in the URL using parameter `test_ip_address`
+* Adding check for the existence of a leading "/" in the endpoint URL, adding if missing
+* Adding API Key parameter "key=" to the URL for the extreme IP lookup service as per their updated docs - https://extreme-ip-lookup.com/
+* Updated README with notes on the new requirement for the API key
+
 ## 1.3.2 & 1.3.1
 * Adding cache lookups for the IPv6 addresses to the rules engine expressions
 * Bumping the version numbers

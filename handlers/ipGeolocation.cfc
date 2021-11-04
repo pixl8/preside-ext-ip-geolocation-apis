@@ -6,25 +6,25 @@ component {
 
 	// Backwards compatability
 	public any function testAjaxGetIp( event, prc, rc, args={} ) {
-		return ajaxGetIp( argumentCollection = arguments );
+		return ajaxGetIp( argumentCollection=arguments );
 	}
 	public struct function testGetIp( event, prc, rc, args={} ) {
-		return getIp( argumentCollection = arguments );
+		return getIp( argumentCollection=arguments );
 	}
 
 	// Core public methods
 	public any function ajaxGetIp( event, prc, rc, args={} ) {
-		var visitorIpAddress = rc.ipAddress ?: "";
+		var visitorIpAddress = arguments.rc.test_ip_address ?: arguments.rc.ipAddress ?: "";
 
 		if( !len( trim( visitorIpAddress ) ) ){ event.notFound(); }
 		if( event.isStatelessRequest() ){ return extremeIpLookupServiceWrapper.scaffoldBlankResponse() };
 
 		if( IsIPv6( visitorIpAddress ) ){
 			var format = systemConfigurationService.getSetting( "ip_geolocation", "ipv6_result_format", "json" );
-			var result = ipwhoisIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
+			var result = ipwhoisIpLookupServiceWrapper.getIp( ipAddress=visitorIpAddress );
 		} else {
 			var format = systemConfigurationService.getSetting( "ip_geolocation", "result_format", "json" );
-			var result = extremeIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
+			var result = extremeIpLookupServiceWrapper.getIp( ipAddress=visitorIpAddress );
 		}
 
 		if( isStruct( result ) ) {
@@ -35,15 +35,15 @@ component {
 	}
 
 	public struct function getIp( event, prc, rc, args={} ) {
-		var visitorIpAddress = rc.ipAddress ?: "";
+		var visitorIpAddress = arguments.rc.test_ip_address ?: arguments.rc.ipAddress ?: "";
 
 		if( !len( trim( visitorIpAddress ) ) ){ event.notFound(); }
 		if( event.isStatelessRequest() ){ return extremeIpLookupServiceWrapper.scaffoldBlankResponse() };
 
 		if( IsIPv6( visitorIpAddress ) ){
-			var result = ipwhoisIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
+			var result = ipwhoisIpLookupServiceWrapper.getIp( ipAddress=visitorIpAddress );
 		} else {
-			var result = extremeIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
+			var result = extremeIpLookupServiceWrapper.getIp( ipAddress=visitorIpAddress );
 		}
 
 		if( isStruct( result ) ) {
@@ -54,20 +54,16 @@ component {
 	}
 
 	public any function proxyGetIp( event, prc, rc, args={} ) {
-		var visitorIpAddress = rc.ipAddress ?: "";
+		var visitorIpAddress = arguments.rc.test_ip_address ?: arguments.rc.ipAddress ?: "";
 
 		if( !len( trim( visitorIpAddress ) ) ){ event.notFound(); }
 		if( event.isStatelessRequest() ){ return extremeIpLookupServiceWrapper.scaffoldBlankResponse() };
 
 		if( IsIPv6( visitorIpAddress ) ){
-			var result = ipwhoisIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
+			var result = ipwhoisIpLookupServiceWrapper.getIp( ipAddress=visitorIpAddress );
 		} else {
-			var result = extremeIpLookupServiceWrapper.getIp( ipAddress = visitorIpAddress );
+			var result = extremeIpLookupServiceWrapper.getIp( ipAddress=visitorIpAddress );
 		}
-
-		dump( visitorIpAddress );
-		dump( result )
-		abort;
 	}
 
 }
