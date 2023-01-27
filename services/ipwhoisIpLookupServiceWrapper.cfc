@@ -19,7 +19,7 @@ component singleton=true {
 
 // PUBLIC API METHODS
 	public any function getIP( required string ipAddress, struct additionalParams={} ) {
-		var uri                  = "/" & _getResultFormat() & "/" & arguments.ipAddress;
+		var uri                  = "/" & arguments.ipAddress;
 		var queryStringSeparator = "?";
 		var cachedResult         = getIpLookupFromCache( arguments.ipAddress );
 
@@ -106,22 +106,17 @@ component singleton=true {
 	private any function _processHttpResponse( required struct httpResponse, required string method, required string uri, required string body ) {
 		if ( _isSuccessfulResponse( arguments.httpResponse ) ) {
 			var response          = {};
-			var format            = _getResultFormat();
 			var hasCallbackMethod = ( _getCallbackMethod().Len() > 0 );
 
 			try {
-				if( format == "json" && !hasCallbackMethod ) {
+				if ( hasCallbackMethod ) {
+					response = ( toString( toBinary( arguments.httpResponse.filecontent ) ) );
+				} else {
 					response = DeserializeJson( arguments.httpResponse.filecontent );
 					response = _transformJsonResults( response );
-				} else if ( format == "json" && hasCallbackMethod ) {
-					response = ( toString( toBinary( arguments.httpResponse.filecontent ) ) );
-				} else if ( format == "xml" ) {
-					response = XMLParse( arguments.httpResponse.filecontent );
-				} else {
-					response = arguments.httpResponse.filecontent;
 				}
 			} catch( any e ) {
-				_processError( "invalid.response", "Expected " & UCase( format ) &  " response but received, [" & arguments.httpResponse.filecontent & "].", arguments.httpResponse );
+				_processError( "invalid.response", "Expected JSON response but received, [" & arguments.httpResponse.filecontent & "].", arguments.httpResponse );
 			}
 
 			if ( ( response.status ?: "" ) == "success" || ( isSimpleValue( response ) && findNoCase( "success", response ) ) ) {
@@ -131,7 +126,7 @@ component singleton=true {
 				if ( Len( Trim( response.message ?: "" ) ) ) {
 					_processError( "error.response", "Error processing IP Geolocation " & arguments.method & " request. Failure reason: [" & response.message & "]. Method URI: [" & arguments.uri & "]. Method body: [" & arguments.body & "]", arguments.httpResponse );
 				} else {
-					_processError( "invalid.response", "Expected " & UCase( format ) & " response but received, [" & httpResponse.fileContent & "].", arguments.httpResponse );
+					_processError( "invalid.response", "Expected JSON response but received, [" & httpResponse.fileContent & "].", arguments.httpResponse );
 				}
 			}
 		} else {
@@ -172,11 +167,6 @@ component singleton=true {
 
 	private string function _getEndpoint() {
 		return _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_endpoint", "" );
-	}
-
-	private string function _getResultFormat() {
-		var resultFormat = _getSystemConfigurationService().getSetting( "ip_geolocation", "ipv6_result_format", "json" );
-		return resultFormat.len() ? resultFormat : "json";
 	}
 
 	private string function _getCallbackKey() {
