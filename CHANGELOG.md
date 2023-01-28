@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0
+
+Overhaul of the system:
+
+* Scrap use of extremeIp lookup API
+* Scrap public debug handler for ip lookups
+* Use who.is api exclusively (using a separate open source module for its API)
+* Refactor API to focus on getting individual information points, e.g. getCountry(), etc.
+* Check common Cloudflare HTTP headers for geo location information where possible, avoiding API lookups
+* Introduce a cachebox cache for IP lookups
+* Introduce a preside healthcheck service for the API - if it goes down or we have network connectivity issues, do not block requests
+
 ## 1.3.4
 * Adding debug output for the test method proxyGetIp()
 

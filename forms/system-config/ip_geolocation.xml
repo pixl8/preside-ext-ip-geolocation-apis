@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form i18nBaseUri="system-config.ip_geolocation:">
-	<tab id="default">
-		<fieldset id="default">
-			<field name="endpoint"         control="textinput" required="true"                                label="system-config.ip_geolocation:endpoint.label"         help="system-config.ip_geolocation:endpoint.help"        placeholder="system-config.ip_geolocation:endpoint.placeholder"        />
-			<field name="result_format"    control="textinput" required="true"  default="json"                label="system-config.ip_geolocation:result_format.label"    help="system-config.ip_geolocation:result_format.help"   placeholder="system-config.ip_geolocation:result_format.placeholder"   />
-			<field name="callback_key"     control="textinput" required="false"                               label="system-config.ip_geolocation:callback_key.label"     help="system-config.ip_geolocation:callback_key.help"    placeholder="system-config.ip_geolocation:callback_key.placeholder"    />
-			<field name="callback_method"  control="textinput" required="false"                               label="system-config.ip_geolocation:callback_method.label"  help="system-config.ip_geolocation:callback_method.help" placeholder="system-config.ip_geolocation:callback_method.placeholder" />
-			<field name="api_key"          control="textinput" required="false"                               label="system-config.ip_geolocation:api_key.label"          help="system-config.ip_geolocation:api_key.help"         placeholder="system-config.ip_geolocation:api_key.placeholder"         />
-			<field name="api_call_timeout" control="spinner"   required="true"  minValue="1" maxValue="1000"  label="system-config.ip_geolocation:api_call_timeout.label" help="system-config.ip_geolocation:api_call_timeout.help" />
+	<tab id="default" sortorder="10">
+		<fieldset id="api" sortorder="10">
+			<field name="whois_api_key" control="textinput" required="false" />
 		</fieldset>
 	</tab>
-	<tab id="ipv6LookupService">
-		<fieldset id="default">
-			<field name="ipv6_endpoint"         control="textinput" required="true"                                label="system-config.ip_geolocation:ipv6_endpoint.label"         help="system-config.ip_geolocation:ipv6_endpoint.help"         placeholder="system-config.ip_geolocation:ipv6_endpoint.placeholder"         />
-			<field name="ipv6_result_format"    control="textinput" required="true"  default="json"                label="system-config.ip_geolocation:ipv6_result_format.label"    help="system-config.ip_geolocation:ipv6_result_format.help"    placeholder="system-config.ip_geolocation:ipv6_result_format.placeholder"    />
-			<field name="ipv6_callback_key"     control="textinput" required="false"                               label="system-config.ip_geolocation:ipv6_callback_key.label"     help="system-config.ip_geolocation:ipv6_callback_key.help"     placeholder="system-config.ip_geolocation:ipv6_callback_key.placeholder"     />
-			<field name="ipv6_callback_method"  control="textinput" required="false"                               label="system-config.ip_geolocation:ipv6_callback_method.label"  help="system-config.ip_geolocation:ipv6_callback_method.help"  placeholder="system-config.ip_geolocation:ipv6_callback_method.placeholder"  />
-			<field name="ipv6_response_objects" control="textinput" required="false"                               label="system-config.ip_geolocation:ipv6_response_objects.label" help="system-config.ip_geolocation:ipv6_response_objects.help" placeholder="system-config.ip_geolocation:ipv6_response_objects.placeholder" />
-			<field name="ipv6_api_key"          control="textinput" required="false"                               label="system-config.ip_geolocation:ipv6_api_key.label"          help="system-config.ip_geolocation:ipv6_api_key.help"          placeholder="system-config.ip_geolocation:ipv6_api_key.placeholder"          />
-			<field name="ipv6_api_call_timeout" control="spinner"   required="true"  minValue="1" maxValue="1000"  label="system-config.ip_geolocation:ipv6_api_call_timeout.label" help="system-config.ip_geolocation:ipv6_api_call_timeout.help" />
-		</fieldset>
-	</tab>
-	<tab id="externalIpLookupService">
-		<fieldset id="default">
-			<field name="extip_service_endpoint"        control="textinput" required="true"                               label="system-config.ip_geolocation:extip_service_endpoint.label"         help="system-config.ip_geolocation:extip_service_endpoint.help"        placeholder="system-config.ip_geolocation:extip_service_endpoint.placeholder" />
-			<field name="extip_serviceapi_call_timeout" control="spinner"   required="true" minValue="1" maxValue="1000"  label="system-config.ip_geolocation:extip_serviceapi_call_timeout.label"  help="system-config.ip_geolocation:extip_serviceapi_call_timeout.help" />
+	<tab id="advanced" sortorder="10">
+		<fieldset id="header" sortorder="10">
+			<field name="businessName_headers" control="textarea" />
+			<field name="city_headers"         control="textarea" />
+			<field name="region_headers"       control="textarea" />
+			<field name="country_headers"      control="textarea" />
+			<field name="continent_headers"    control="textarea" />
+			<field name="lat_headers"          control="textarea" />
+			<field name="lon_headers"          control="textarea" />
 		</fieldset>
 	</tab>
 </form>

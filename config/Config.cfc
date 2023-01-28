@@ -1,25 +1,40 @@
 component {
 
-	/**
-	 * This extension Config.cfc has been scaffolded by the PresideCMS
-	 * Scaffolding service.
-	 *
-	 * Override or append to core PresideCMS/Coldbox settings here.
-	 *
-	 */
 	public void function configure( required struct config ) {
-		// core settings that will effect Preside
-		var settings            = arguments.config.settings            ?: {};
+		var settings = arguments.config.settings ?: "";
 
-		// other ColdBox settings
-		var coldbox             = arguments.config.coldbox             ?: {};
-		var i18n                = arguments.config.i18n                ?: {};
-		var interceptors        = arguments.config.interceptors        ?: {};
-		var interceptorSettings = arguments.config.interceptorSettings ?: {};
-		var cacheBox            = arguments.config.cacheBox            ?: {};
-		var wirebox             = arguments.config.wirebox             ?: {};
-		var logbox              = arguments.config.logbox              ?: {};
-		var environments        = arguments.config.environments        ?: {};
-
+		_configureDefaults( settings );
+		_setupHealthcheck( settings );
+		_setupFeatures( settings );
+		_setupInterceptors( arguments.config );
 	}
+
+// PRIVATE HELPERS
+	private void function _configureDefaults( settings ) {
+		settings.whoisIpLookup = settings.whoisIpLookup ?: {};
+
+		settings.whoisIpLookup.apiKey = settings.whoisIpLookup.apiKey ?: ( settings.env.WHOIS_IP_LOOKUP_API_KEY ?: "" );
+	}
+
+	private void function _setupHealthcheck( settings ) {
+		settings.healthcheckServices.whoIsIpLookup = {
+			interval = CreateTimeSpan( 0, 1, 0, 0 ) // one hour - heathchecks count toward rate limit
+		};
+	}
+
+	private void function _setupFeatures( settings ) {
+		// for local environments: when your traffic is always coming from 127.0.0.1
+		// enable this feature to reverse lookup your actual IP for testing purposes
+
+		// note: this is dynamically set for 'local' environment in /interceptors/IpGeolocationApiInterceptors.cfc
+		// settings.features.reverseLocalhostIpLookup = { enabled=false };
+	}
+
+	private void function _setupInterceptors( config ) {
+		config.interceptors = config.interceptors ?: [];
+
+		ArrayAppend( config.interceptors, { class="app.extensions.preside-ext-ip-geolocation-apis.interceptors.IpGeolocationApiInterceptors", properties={} } );
+	}
+
+
 }
