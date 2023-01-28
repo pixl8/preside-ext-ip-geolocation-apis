@@ -16,7 +16,7 @@ component {
 		  string  country = ""
 		, boolean _is     = true
 	) {
-		var countryLocation = geoLocationService.getCountry();
+		var countryLocation = geoLocationService.getCountryCode();
 
 		return arguments._is == ListFindNoCase( arguments.country, countryLocation ) > 0;
 	}
