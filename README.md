@@ -11,8 +11,8 @@ The IP Geolocation APIs extension provides:
 
 It reads geolocation data from two sources:
 
-1. Common headers (e.g. Cloudflare geolocation headers) - _these can also be extended by admins in the configuration form_
-2. [https://ipwhois.io/](https://ipwhois.io/) API (only when values not found in headers)
+1. Common headers (e.g. Cloudflare geolocation headers) - _these can also be extended by admins in the configuration form_.
+2. [https://ipwhois.io/](https://ipwhois.io/) API (only when values not found in headers).
 
 ## Installation
 
