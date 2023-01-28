@@ -12,24 +12,7 @@ component {
 		  string region    = ""
 		, string _stringOperator = "contains"
 	) {
-		var config      = systemConfigurationService.getCategorySettings( "ip_geolocation" )
-		var userIp      = event.getClientIp();
-		var extIpResult = {};
-
-		if( userIp == "127.0.0.1" ) {
-			http url=config.extip_service_endpoint result="extIpResult" timeout=config.extip_serviceapi_call_timeout;
-			userIp  = deserializeJSON( extIpResult.filecontent ).IP;
-		}
-
-		var result = {}
-
-		if( IsIPv6( userIp ) ){
-			result = ipwhoisIpLookupServiceWrapper.getIpLookupFromCache( ipAddress=userIp );
-		} else {
-			result = extremeIpLookupServiceWrapper.getIpLookupFromCache( ipAddress=userIp );
-		}
-
-		var regionLocation = result.region ?: "";
+		var regionLocation =  geoLocationService.getRegion();
 
 		switch ( arguments._stringOperator ) {
 			case "eq"            : return regionLocation == arguments.region;
