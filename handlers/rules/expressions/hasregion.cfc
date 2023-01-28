@@ -4,9 +4,7 @@
  */
 component {
 
-	property name="extremeIpLookupServiceWrapper" inject="extremeIpLookupServiceWrapper";
-	property name="ipwhoisIpLookupServiceWrapper" inject="ipwhoisIpLookupServiceWrapper";
-	property name="systemConfigurationService"    inject="systemConfigurationService";
+	property name="geoLocationService" inject="geoLocationService";
 
 	private boolean function evaluateExpression(
 		  string region    = ""
