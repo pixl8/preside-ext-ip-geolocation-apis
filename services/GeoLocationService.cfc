@@ -2,7 +2,7 @@
  * @presideService true
  * @singleton      true
  */
-component {
+component accessors=true {
 
 	property name="defaultApiKey" inject="coldbox:setting:whoisIpLookup.apiKey";
 	property name="whoisApi"      inject="whoisApi@cbwhois";
@@ -58,7 +58,7 @@ component {
 				, apiKey    = _getApiKey()
 			);
 
-			if ( !$helpers.isTrue( result.success ) ) {
+			if ( !isBoolean( result.success ?: "" ) || !result.success ) {
 				throw(
 					  type    = "whois.service.unavailable"
 					, message = "Non successful response from server: [#( result.message )#]"
@@ -100,7 +100,7 @@ component {
 
 		var headersToCheck = _getHeadersToCheck( arguments.entity );
 		if ( ArrayLen( headersToCheck ) ) {
-			var headers = getHttpRequestData( false ).headers;
+			var headers = _getHeaders();
 			for( var headerName in headersToCheck ) {
 				if ( Len( headers[ headerName ] ?: "" ) ) {
 					request._geoLocationCache[ arguments.entity ] = headers[ headerName ];
@@ -110,6 +110,10 @@ component {
 		}
 
 		return "";
+	}
+
+	private function _getHeaders() {
+		return getHttpRequestData( false ).headers;
 	}
 
 	private array function _getHeadersToCheck( entity ) {
@@ -135,10 +139,10 @@ component {
 					data = whoisApi.lookup(
 						  ipAddress = ipAddress
 						, apiKey    = _getApiKey()
-						, fields    = "success,continent_code,country_code,region,city,latitude,longitude,connection.org,latitude,longitude"
+						, fields    = "success,continent_code,country_code,region,city,latitude,longitude,connection.org"
 					);
 
-					if ( $helpers.isTrue( data.success ?: "" ) ) {
+					if ( IsBoolean( data.success ?: "" ) && data.success ) {
 						data = {
 							  businessName = ( data.connection.org ?: "" )
 							, city         = ( data.city           ?: "" )

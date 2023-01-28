@@ -23,6 +23,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install TEST dependencies
+        uses: pixl8/github-action-box-install@v2
+        with:
+          verbose: true
+          force: true
+          boxjson_dir: /tests
+
+      - name: Run tests
+        uses: pixl8/github-action-box-test@v3
+        with:
+          boxjson_dir: /tests
+          test_dir: /tests
+          test_server_json: /tests/server.json
+          output_file: /tests/test-results.txt
+          verbose: false
+
       - name: Install dependencies
         uses: pixl8/github-action-box-install@v2
 
