@@ -29,8 +29,9 @@ component {
 		var contintentLocation = geoLocationService.getContinent();
 
 		contintentLocation = mappedContintentsForBackwardCompat[ contintentLocation ] ?: contintentLocation;
+		var found = ListFindNoCase( arguments.continent, contintentLocation ) > 0;
 
-		return arguments._is == ListFindNoCase( arguments.continent, contintentLocation ) > 0;
+		return arguments._is == found;
 	}
 
 }
