@@ -103,8 +103,8 @@ component {
 			var headers = getHttpRequestData( false ).headers;
 			for( var headerName in headersToCheck ) {
 				if ( Len( headers[ headerName ] ?: "" ) ) {
-					request._geoLocationCache[ arguments.entity ] = headers[ headersToCheck ];
-					return headers[ headersToCheck ];
+					request._geoLocationCache[ arguments.entity ] = headers[ headerName ];
+					return headers[ headerName ];
 				}
 			}
 		}
