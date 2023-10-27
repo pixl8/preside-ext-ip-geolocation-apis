@@ -1,5 +1,5 @@
 {
-	  "id"        : "ip_geolocation_apis"
+	  "id"        : "preside-ext-ip-geolocation-apis"
 	, "title"     : "IP Geolocation APIs"
 	, "author"    : "Pixl8 Group"
 	, "version"   : "$VERSION_NUMBER"

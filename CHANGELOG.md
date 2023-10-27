@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+* Fix manifest ID
+
 ## 2.0.1
 
 * Fix expression issue when using listFind
