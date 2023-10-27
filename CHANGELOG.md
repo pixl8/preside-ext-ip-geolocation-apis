@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+* Fix expression issue when using listFind
+
 ## 2.0.0
 
 Overhaul of the system:
